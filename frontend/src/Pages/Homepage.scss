@@ -1,0 +1,23 @@
+@import "../variables";
+
+body {
+	background-image: url("./background.svg");
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.landing-title{
+	font-size: 2.8rem;
+}
+
+.landing-title span{
+	color: $warning;
+	font-size: larger;
+}
+
+@media screen and (max-width: 850px){
+	body{
+		background-image: none;
+		background-color: $danger;
+	}
+}
