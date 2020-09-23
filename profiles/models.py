@@ -16,7 +16,6 @@ class UserProfile(models.Model):
     )
     dob =  models.DateField(unique=False, blank=False, null=False)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
-
     class Meta:
         '''
         to set table name in database
