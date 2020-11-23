@@ -18,6 +18,7 @@ class UserProfileView(RetrieveUpdateAPIView):
     def get(self, request, *args, **kwargs):
         try:
             user_profile = UserProfile.objects.get(user=request.user)
+            print(type(user_profile))
             status_code = status.HTTP_200_OK
             response = {
                 'success': 'true',

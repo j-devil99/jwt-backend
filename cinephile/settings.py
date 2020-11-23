@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'accounts',
     'profiles',
     'django_countries',
-    'corsheaders'
+    'corsheaders',
+    'activities'
 ]
 
 AUTH_USER_MODEL = 'accounts.User'

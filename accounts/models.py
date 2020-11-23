@@ -56,7 +56,7 @@ class User(AbstractBaseUser):
     objects = UserManager()
 
     def get_id(self):
-        return self.id
+        return self.id.urn[9:]
 
     def __str__(self):
         return self.email
