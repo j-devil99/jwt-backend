@@ -5,4 +5,5 @@ urlpatterns = [
     # path('', include('frontend.urls')),
     path('api/', include('accounts.urls')),
     path('api/', include('profiles.urls')),
+    path('api/', include('activities.urls')),
 ]

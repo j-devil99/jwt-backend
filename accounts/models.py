@@ -55,6 +55,9 @@ class User(AbstractBaseUser):
     # objects of this type.
     objects = UserManager()
 
+    def get_id(self):
+        return self.id.urn[9:]
+
     def __str__(self):
         return self.email
 
