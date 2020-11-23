@@ -11,7 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserProfile
-        fields = ('first_name', 'last_name', 'dob', 'gender',)
+        fields = ('id', 'first_name', 'last_name', 'dob', 'gender', 'weight', 'height', 'BMI')
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
@@ -32,6 +32,9 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             last_name=profile_data['last_name'],
             dob=profile_data['dob'],
             gender=profile_data['gender'],
+            weight=profile_data['weight'],
+            height=profile_data['height'],
+            BMI=profile_data['BMI'],
         )
         return user
 
@@ -44,11 +47,13 @@ class UserLoginSerializer(serializers.Serializer):
     email = serializers.CharField(max_length=255)
     password = serializers.CharField(max_length=128, write_only=True)
     token = serializers.CharField(max_length=255, read_only=True)
+    user_id = serializers.UUIDField(read_only=True)
 
     def validate(self, data):
         email = data.get("email", None)
         password = data.get("password", None)
         user = authenticate(email=email, password=password)
+        print(user)
         if user is None:
             raise serializers.ValidationError(
                 'A user with this email and password is not found.'
@@ -56,12 +61,15 @@ class UserLoginSerializer(serializers.Serializer):
         try:
             payload = JWT_PAYLOAD_HANDLER(user)
             jwt_token = JWT_ENCODE_HANDLER(payload)
+            user_id = user.get_id()
+            print(user_id)
             update_last_login(None, user)
         except User.DoesNotExist:
             raise serializers.ValidationError(
                 'User with given email and password does not exists'
             )
         return {
+            'user_id': user_id,
             'email':user.email,
-            'token': jwt_token
+            'token': jwt_token,
         }
